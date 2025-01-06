@@ -12,7 +12,7 @@ A terminal user interface for managing your Broker installation. This project pr
 
 ## Requirements
 
-- Python ≥ 3.12
+- Python ≥ 3.10
 - broker ≥ 0.6.2
 - textual[syntax] ≥ 1.0.0
 
