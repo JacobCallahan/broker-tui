@@ -1,3 +1,20 @@
+"""A Terminal User Interface (TUI) application for managing and interacting with Broker.
+
+This module provides a text-based user interface built with the Textual library to manage
+host inventories across different providers. It allows users to:
+
+- View and filter host inventories
+- Sync inventory data from providers
+- Check in/out hosts
+- View detailed host information
+- Handle multiple providers
+
+Classes:
+    ProviderSync: Widget for provider selection and sync functionality
+    InventoryTable: DataTable widget for displaying inventory data
+    BrokerTUI: Main application class
+    ErrorModal: Modal screen for displaying error messages
+"""
 import asyncio
 import subprocess
 
@@ -216,9 +233,9 @@ class BrokerTUI(App):
             if self.provider_sync.value == "All":
                 self.notify("Syncing all providers", title="Sync Triggered")
                 for provider in self.provider_sync.providers[1:]:
-                    asyncio.create_task(self.action_sync(provider))
+                    asyncio.create_task(self.action_sync(provider))  # noqa: RUF006
             else:
-                asyncio.create_task(self.action_sync())
+                asyncio.create_task(self.action_sync())  # noqa: RUF006
         elif event.button.id == "checkin":
             self.action_checkin()
 
@@ -360,6 +377,8 @@ class BrokerTUI(App):
 
 
 class ErrorModal(ModalScreen):
+    """Modal screen to display error messages."""
+
     CSS = """
     ErrorModal {
         align: center middle;
@@ -397,6 +416,7 @@ class ErrorModal(ModalScreen):
         self.error_message = message
 
     def compose(self):
+        """Create child widgets for the error modal."""
         with Container(id="error-modal"):
             yield Static(self.title_text, classes="error-title")
             with ScrollableContainer(id="error-message-container"):
@@ -404,13 +424,16 @@ class ErrorModal(ModalScreen):
             yield Button("Dismiss", id="dismiss", variant="error")
 
     def on_button_pressed(self, event):
+        """Dismiss the error modal."""
         if event.button.id == "dismiss":
             self.dismiss()
 
 
 def main():
+    """Run the Broker TUI app."""
     app = BrokerTUI()
     app.run()
+
 
 if __name__ == "__main__":
     main()
