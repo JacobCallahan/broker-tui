@@ -1,0 +1,20 @@
+[project]
+name = "broker-tui"
+version = "0.1.0"
+description = "The interactive interface for your Broker installation."
+readme = "README.md"
+authors = [
+    { name = "Jacob Callahan", email = "jacob.callahan05@gmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "broker>=0.6.2",
+    "textual[syntax]>=1.0.0",
+]
+
+[project.scripts]
+broker-tui = "broker_tui.tui:main"
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
